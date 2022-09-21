@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  sql-server:
+      container_name: sql-server
+      image: mcr.microsoft.com/mssql/server:2019-latest
+      environment:
+        - SA_PASSWORD=mssql@Admin
+        - ACCEPT_EULA="Y"
+      user: root
+      volumes:
+        - mssql_data:/var/opt/mssql/data
+      ports:
+        - 1433:1433
+
+volumes:
+  mssql_data:

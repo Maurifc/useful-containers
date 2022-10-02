@@ -3,6 +3,7 @@ services:
   sql-server:
       container_name: sql-server
       image: mcr.microsoft.com/mssql/server:2019-latest
+      restart: on-failure
       environment:
         - SA_PASSWORD=mssql@Admin
         - ACCEPT_EULA="Y"
@@ -12,5 +13,16 @@ services:
       ports:
         - 1433:1433
 
+  jenkins:
+      container_name: jenkins
+      image: jenkins/jenkins:lts-jdk11
+      restart: on-failure
+      volumes:
+        - jenkins_home:/var/jenkins_home
+      ports:
+        - 8080:8080
+        - 50000:50000
+
 volumes:
   mssql_data:
+  jenkins_home:

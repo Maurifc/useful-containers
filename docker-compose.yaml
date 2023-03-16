@@ -1,28 +1,31 @@
 version: '3.7'
 services:
   sql-server:
-      container_name: sql-server
-      image: mcr.microsoft.com/mssql/server:2019-latest
-      restart: on-failure
-      environment:
-        - SA_PASSWORD=mssql@Admin
-        - ACCEPT_EULA="Y"
-      user: root
-      volumes:
-        - mssql_data:/var/opt/mssql/data
-      ports:
-        - 1433:1433
+    container_name: sql-server
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    restart: on-failure
+    environment:
+      - SA_PASSWORD=mssql@Admin
+      - ACCEPT_EULA="Y"
+    user: root
+    volumes:
+      - mssql_data:/var/opt/mssql/data
+    ports:
+      - 1433:1433
 
-  jenkins:
-      container_name: jenkins
-      image: jenkins/jenkins:lts-jdk11
-      restart: on-failure
-      volumes:
-        - jenkins_home:/var/jenkins_home
-      ports:
-        - 8080:8080
-        - 50000:50000
+  postgres:
+    container_name: postgres
+    image: postgres:14
+    restart: on-failure
+    environment:
+      POSTGRES_USER: pg
+      POSTGRES_PASSWORD: pg
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
 volumes:
   mssql_data:
-  jenkins_home:
+  pgdata:
